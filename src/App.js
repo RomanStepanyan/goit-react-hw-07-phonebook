@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { getContacts } from './Redux/Operations';
 import ContactForm from './components/ContactForm/ContactForm';
@@ -9,8 +9,10 @@ import s from './App.module.css';
 
 export const App = () => {
   const dispatch = useDispatch();
+  // const contacts = useSelector(getContacts);
+  // console.log(contacts);
 
-  useEffect(() => dispatch(getContacts()), []);
+  useEffect(() => dispatch(getContacts()), [dispatch]);
   // state = {
   //   contacts: [
   //     { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },

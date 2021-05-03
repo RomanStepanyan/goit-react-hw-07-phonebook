@@ -1,5 +1,7 @@
-import { connect } from 'react-redux';
-import { onRemove } from '../../Redux/Actions';
+import { connect, useDispatch } from 'react-redux';
+// import { onRemove } from '../../Redux/Actions';
+import { deleteContacts } from '../../Redux/Operations';
+
 import PropTypes from 'prop-types';
 import s from './ContactsList.module.css';
 
@@ -12,6 +14,8 @@ import s from './ContactsList.module.css';
 // };
 
 const ContactsList = ({ items, onRemove }) => {
+  const dispatch = useDispatch();
+
   if (items.length === 0) return null;
   return (
     <ul>
@@ -19,7 +23,10 @@ const ContactsList = ({ items, onRemove }) => {
         <li key={item.id} className={s.contact}>
           <span className={s.contact_span}>{item.name}</span>{' '}
           <span className={s.contact_span}>{item.number}</span>
-          <button className={s.button} onClick={() => onRemove(item.id)}>
+          <button
+            className={s.button}
+            onClick={() => dispatch(deleteContacts(item.id))}
+          >
             Delete
           </button>
         </li>
@@ -42,16 +49,16 @@ const mapStateToProps = ({ contacts: { items, filter } }) => ({
   items: getVisibleContacts(items, filter),
 });
 
-const mapDispatchToProps = dispatch => ({
-  onRemove: id => dispatch(onRemove(id)),
-});
+// const mapDispatchToProps = dispatch => ({
+//   deleteContacts: id => dispatch(deleteContacts(id)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsList);
+export default connect(mapStateToProps)(ContactsList);
 
 ContactsList.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string,
+      id: PropTypes.number,
       name: PropTypes.string,
       number: PropTypes.string,
     }),

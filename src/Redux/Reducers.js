@@ -11,6 +11,9 @@ const error = createReducer(INITIAL_STATE.error, {
   GET_CONTACTS_FAILURE: (state, { payload }) => {
     return payload;
   },
+  ADD_CONTACTS_FAILURE: (_, { payload }) => {
+    return payload;
+  },
 });
 
 const isLoading = createReducer(INITIAL_STATE.isLoading, {
@@ -26,17 +29,23 @@ const isLoading = createReducer(INITIAL_STATE.isLoading, {
 });
 
 const items = createReducer(INITIAL_STATE.items, {
-  GET_CONTACTS_SUCCESS: (state, { payload }) => {
+  GET_CONTACTS_SUCCESS: (_, { payload }) => {
     return payload;
   },
   ADD_CONTACT: (state, { payload }) => {
     const isNotUniqueContact = state.some(item => item.name === payload.name);
-    if (!isNotUniqueContact) {
-      return [...state, payload];
-    } else {
+    if (isNotUniqueContact) {
       alert('Contact is already exist');
       return state;
     }
+    return [...state, payload];
+
+    // if (!isNotUniqueContact) {
+    //   return [...state, payload];
+    // } else {
+    //   alert('Contact is already exist');
+    //   return state;
+    // }
   },
   DELETE_CONTACT: (state, { payload }) => {
     return state.filter(({ id }) => id !== payload);
