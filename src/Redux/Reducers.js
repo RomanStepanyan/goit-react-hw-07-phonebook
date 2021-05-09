@@ -32,22 +32,11 @@ const items = createReducer(INITIAL_STATE.items, {
   GET_CONTACTS_SUCCESS: (_, { payload }) => {
     return payload;
   },
-  ADD_CONTACT: (state, { payload }) => {
-    const isNotUniqueContact = state.some(item => item.name === payload.name);
-    if (isNotUniqueContact) {
-      alert('Contact is already exist');
-      return state;
-    }
+  ADD_CONTACT_SUCCESS: (state, { payload }) => {
     return [...state, payload];
-
-    // if (!isNotUniqueContact) {
-    //   return [...state, payload];
-    // } else {
-    //   alert('Contact is already exist');
-    //   return state;
-    // }
   },
-  DELETE_CONTACT: (state, { payload }) => {
+
+  DELETE_CONTACTS_SUCCESS: (state, { payload }) => {
     return state.filter(({ id }) => id !== payload);
   },
 });

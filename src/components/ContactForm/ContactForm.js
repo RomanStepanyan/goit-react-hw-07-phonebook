@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-import { useDispatch, connect } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import { addContacts, getContacts } from '../../Redux/Operations';
+import { notValidatedName } from '../../Redux/Selectors';
 
 import s from './ContactForm.module.css';
 
@@ -14,19 +15,24 @@ const ContactForm = () => {
   const [number, setNumber] = useState('');
 
   const handleChangeNameForm = ({ target }) => {
-    // const { name, value } = target;
     setName(target.value);
   };
 
   const handleChangeNumberForm = ({ target }) => {
-    // const { name, value } = target;
     setNumber(target.value);
   };
 
+  const getItem = useSelector(notValidatedName);
+
   const handleFormSubmit = event => {
     event.preventDefault();
-    dispatch(addContacts({ name, number }));
-    // dispatch(getContacts());
+    if (getItem(name)) {
+      alert('Contact is already exist');
+      return null;
+    } else {
+      dispatch(addContacts({ name, number }));
+      dispatch(getContacts());
+    }
     setNumber('');
     setName('');
   };

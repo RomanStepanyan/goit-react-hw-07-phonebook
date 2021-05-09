@@ -31,9 +31,6 @@ const ContactsList = ({ items, onRemove }) => {
           </button>
         </li>
       ))}
-      {/* {items.map(item => ( 
-        <ContactsListItem key={uuid()} {...items} onRemove={onRemove} />
-      ))} */}
     </ul>
   );
 };
@@ -49,10 +46,6 @@ const mapStateToProps = ({ contacts: { items, filter } }) => ({
   items: getVisibleContacts(items, filter),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   deleteContacts: id => dispatch(deleteContacts(id)),
-// });
-
 export default connect(mapStateToProps)(ContactsList);
 
 ContactsList.propTypes = {
@@ -63,5 +56,4 @@ ContactsList.propTypes = {
       number: PropTypes.string,
     }),
   ),
-  onRemove: PropTypes.func,
 };
